@@ -29,7 +29,7 @@ y_test_pred = tree.predict(X_test)
 
 print("R² entraînement :", r2_score(y_train, y_train_pred))
 print("R² test         :", r2_score(y_test, y_test_pred))
-print("RMSE test       :", mean_squared_error(y_test, y_test_pred, squared=False))
+print("RMSE test       :", mean_squared_error(y_test, y_test_pred))
 
 # ---------------------------
 # Visualisation : Courbe en escalier sur 1 variable

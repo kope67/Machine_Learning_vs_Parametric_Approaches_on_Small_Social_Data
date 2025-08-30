@@ -24,7 +24,7 @@ def train_nn(X, y, n_hidden=10, lr=0.01, epochs=1000):
     n_output = 1
 
     W1, b1, W2, b2 = initialize_parameters(n_features, n_hidden, n_output)
-    losses = []
+
     for epoch in range(epochs):
         Z1 = X @ W1 + b1
         A1 = tanh(Z1)
@@ -32,7 +32,6 @@ def train_nn(X, y, n_hidden=10, lr=0.01, epochs=1000):
         y_hat = Z2
 
         loss = np.mean((y_hat - y) ** 2)
-        losses.append((epoch, loss))
 
         dZ2 = 2 * (y_hat - y) / n_samples
         dW2 = A1.T @ dZ2
@@ -51,8 +50,7 @@ def train_nn(X, y, n_hidden=10, lr=0.01, epochs=1000):
         if epoch % 100 == 0:
             print(f"Epoch {epoch} - MSE: {loss:.4f}")
 
-    loss_df = pd.DataFrame(losses, columns=["epoch", "loss"])
-    return W1, b1, W2, b2, loss_df
+    return W1, b1, W2, b2
 
 def predict(X, W1, b1, W2, b2):
     A1 = tanh(X @ W1 + b1)
@@ -76,18 +74,7 @@ def main():
     y_scaled = scaler_y.fit_transform(y)
 
     # 4. Entraînement du réseau
-    W1, b1, W2, b2, loss_df = train_nn(X_scaled, y_scaled, n_hidden=100, lr=0.01, epochs=300000)
-
-
-    # Affichage de la courbe MSE (loss) en fonction de l'epoch
-    plt.figure()
-    plt.plot(loss_df["epoch"], loss_df["loss"])
-    plt.xlabel("Epoch")
-    plt.ylabel("MSE (loss)")
-    plt.title("Loss curve (MSE) as a function of epoch")
-    plt.grid(True)
-    plt.show()
-
+    W1, b1, W2, b2 = train_nn(X_scaled, y_scaled, n_hidden=10, lr=0.01, epochs=2000)
 
     # 5. Prédictions et retour à l’échelle d’origine
     y_pred_scaled = predict(X_scaled, W1, b1, W2, b2)
@@ -104,10 +91,6 @@ def main():
     plt.title("Réseau de neurones sur données réelles")
     plt.grid(True)
     plt.show()
-
-    # 8. Affichage du DataFrame des pertes
-    print("\nDataFrame epoch*loss :")
-    print(loss_df.head())
 
 if __name__ == "__main__":
     main()

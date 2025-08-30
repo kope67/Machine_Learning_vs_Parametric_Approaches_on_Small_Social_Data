@@ -32,4 +32,4 @@ y_pred_test = reg_tree.predict(X_test)
 
 print("R² entraînement :", r2_score(y_train, y_pred_train))
 print("R² test         :", r2_score(y_test, y_pred_test))
-print("RMSE test       :", mean_squared_error(y_test, y_pred_test, squared=False))
+print("RMSE test       :", mean_squared_error(y_test, y_pred_test))

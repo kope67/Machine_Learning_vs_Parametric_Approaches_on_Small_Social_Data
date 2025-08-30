@@ -63,7 +63,7 @@ def predict(X, W, b):
     A = model(X, W, b)
     return A >= 0.5
 
-def artificial_neuron(X, y, learning_rate=0.1, n_iter=100):
+def artificial_neuron(X, y, learning_rate=0.01, n_iter=100):
     W, b = initialisation(X)
     Loss = []
 
